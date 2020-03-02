@@ -2,9 +2,11 @@ require 'gh/ops/version'
 
 require 'octokit'
 require 'terminal-table'
+require 'lightly'
 
 module Gh
   module Ops
+
     $gh = Octokit::Client.new(:netrc => true, :per_page => 100,
       :auto_traversal => true, :auto_paginate => true)
 
@@ -25,9 +27,12 @@ module Gh
       begin
         return [$gh.repository("#{org}/#{repo}")]
       rescue Octokit::InvalidRepository
-        return $gh.org_repos(org, {:type => 'all'}).select {
-          |ghrepo| (/#{repo}/ =~ ghrepo[:full_name].split('/')[1])
-        }
+        lightly = Lightly.new dir: File.expand_path('~/.gh-ops'), life: 900, hash: true
+        return lightly.get "#{org}/#{repo}" do
+          $gh.org_repos(org, {:type => 'all'}).select {
+            |ghrepo| (/#{repo}/ =~ ghrepo[:full_name].split('/')[1])
+          }
+        end
       end
     end
   end
