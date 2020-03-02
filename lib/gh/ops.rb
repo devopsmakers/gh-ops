@@ -28,6 +28,7 @@ module Gh
         return [$gh.repository("#{org}/#{repo}")]
       rescue Octokit::InvalidRepository
         lightly = Lightly.new dir: File.expand_path('~/.gh-ops'), life: 900, hash: true
+        lightly.prune
         return lightly.get "#{org}/#{repo}" do
           $gh.org_repos(org, {:type => 'all'}).select {
             |ghrepo| (/#{repo}/ =~ ghrepo[:full_name].split('/')[1])
