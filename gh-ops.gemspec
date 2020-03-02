@@ -33,7 +33,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor", "~> 0.20.3"
   spec.add_dependency "activesupport", "~> 6.0"
   spec.add_dependency "git", "~> 1.5"
-  spec.add_dependency "terminal-table", "~> 1.8.0"
+  spec.add_dependency "terminal-table", "~> 1.8"
+  spec.add_dependency "rainbow", "~> 3.0"
 
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", "~> 10.0"

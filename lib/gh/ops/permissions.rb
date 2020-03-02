@@ -1,7 +1,7 @@
 require 'gh/ops'
 require 'gh/ops/subcommand'
 
-require 'terminal-table'
+require 'rainbow/ext/string'
 
 module Gh
   module Ops
@@ -12,7 +12,7 @@ module Gh
 
       desc 'get', 'get permissions on a repo'
       def get
-        say "Getting permissions for: #{options[:identity]} on repos matching: #{options[:repo]}"
+        say "Getting permissions for: #{options[:identity].color(:yellow)} on repos matching: #{options[:repo].color(:cyan)}"
         say 'Depending on the number of repos this may take a while...'
         say ''
         orgrepos = Gh::Ops.get_matching_repos(options[:org], options[:repo])
@@ -31,7 +31,7 @@ module Gh
         :desc => 'Permission to set on repositories [none, read or write]',
         :default => 'read'
       def set
-        say "Setting permissions for: #{options[:identity]} on repos matching: #{options[:repo]} to #{options[:permission]}"
+        say "Setting permissions for: #{options[:identity].color(:yellow)} on repos matching: #{options[:repo].color(:cyan)} to #{options[:permission].color(:red)}"
         say 'Depending on the number of repos this may take a while...'
         say ''
         orgrepos = Gh::Ops.get_matching_repos(options[:org], options[:repo])

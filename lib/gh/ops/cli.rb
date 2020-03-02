@@ -1,5 +1,6 @@
 require 'gh/ops'
 require 'gh/ops/permissions'
+require 'gh/ops/protect'
 require 'gh/ops/comment'
 require 'gh/ops/gist'
 require 'gh/ops/status'
@@ -13,6 +14,9 @@ module Gh
     class CLI < Thor
       desc 'permissions', 'Operate on repository permissions'
       subcommand 'permissions', Permissions
+
+      desc 'protect', 'Manage branch protection rules'
+      subcommand 'protect', Protect
 
       desc 'comment', 'Create, update and delete issue comments'
       subcommand 'comment', Comment

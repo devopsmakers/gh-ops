@@ -1,15 +1,26 @@
-require "gh/ops/version"
-require "octokit"
+require 'gh/ops/version'
+
+require 'octokit'
+require 'terminal-table'
 
 module Gh
   module Ops
     $gh = Octokit::Client.new(:netrc => true, :per_page => 100,
       :auto_traversal => true, :auto_paginate => true)
-    $gh.login
 
     def self.data_table(headings, rows)
-      return Terminal::Table.new :headings => headings, :rows => rows
+      alternating_rows = []
+      rows.each do |row|
+        if alternating_rows.length % 2 == 0
+          alternating_rows << row.map{|x| x.to_s.color(:cyan)}
+        else
+          alternating_rows << row
+        end
+      end
+
+      return Terminal::Table.new :headings => headings, :rows => alternating_rows
     end
+
     def self.get_matching_repos(org, repo)
       begin
         return [$gh.repository("#{org}/#{repo}")]

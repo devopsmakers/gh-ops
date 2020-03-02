@@ -3,7 +3,7 @@ require 'gh/ops/subcommand'
 
 module Gh
   module Ops
-    class CommentSubCommand < SubCommand
+    class Comment < SubCommand
       desc 'get', 'get permissions on a repo'
       def get
         p 'get perms'

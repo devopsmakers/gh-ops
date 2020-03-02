@@ -3,8 +3,6 @@ require 'git'
 
 module Gh
   module Ops
-
-    # Set defaults here.
     class ThorBase < Thor
       include Thor::Actions
 
