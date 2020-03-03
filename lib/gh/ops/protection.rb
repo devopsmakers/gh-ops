@@ -1,6 +1,5 @@
 require 'gh/ops'
 require 'gh/ops/subcommand'
-
 require 'rainbow/ext/string'
 
 module Gh
@@ -100,18 +99,24 @@ APPROVALS
         def _get_branch_protection(repos, branch)
           branch_protection = {}
           repos.each do |orgrepo|
-            repo_branch_protection = $gh.branch_protection(orgrepo[:full_name], branch, :accept => 'application/vnd.github.luke-cage-preview+json')
-            branch_protection[orgrepo[:full_name].to_sym] = repo_branch_protection
+            begin
+              repo_branch_protection = $gh.branch_protection(orgrepo[:full_name], branch, :accept => 'application/vnd.github.luke-cage-preview+json')
+              branch_protection[orgrepo[:full_name].to_sym] = repo_branch_protection
+            rescue Octokit::NotFound
+            end
           end
           return branch_protection
         end
 
         def _set_branch_protection(repos, branch, protection_options)
           repos.each do |orgrepo|
-            if options[:remove]
-              $gh.unprotect_branch(orgrepo[:full_name].to_s, branch, :accept => 'application/vnd.github.luke-cage-preview+json')
-            else
-              $gh.protect_branch(orgrepo[:full_name].to_s, branch, protection_options)
+            begin
+              if options[:remove]
+                $gh.unprotect_branch(orgrepo[:full_name].to_s, branch, :accept => 'application/vnd.github.luke-cage-preview+json')
+              else
+                $gh.protect_branch(orgrepo[:full_name].to_s, branch, protection_options)
+              end
+            rescue Octokit::NotFound
             end
           end
         end

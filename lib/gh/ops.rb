@@ -3,6 +3,7 @@ require 'gh/ops/version'
 require 'octokit'
 require 'terminal-table'
 require 'lightly'
+require 'rainbow/ext/string'
 
 module Gh
   module Ops
@@ -17,7 +18,17 @@ module Gh
       alternating_rows = []
       rows.each do |row|
         if alternating_rows.length % 2 == 0
-          alternating_rows << row.map{|x| x.to_s.color(:cyan)}
+
+          # I'm sure that there's a better way but all attempts to map failed.
+          colored_row = []
+          row.each_with_index do |cell, id|
+            colored_cell = []
+            cell.to_s.each_line do |line|
+              colored_cell << line.chomp.color(:cyan)
+            end
+            colored_row << colored_cell.join("\n")
+          end
+          alternating_rows << colored_row
         else
           alternating_rows << row
         end
