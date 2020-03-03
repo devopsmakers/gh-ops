@@ -1,6 +1,6 @@
 require 'gh/ops'
 require 'gh/ops/permissions'
-require 'gh/ops/protect'
+require 'gh/ops/protection'
 require 'gh/ops/comment'
 require 'gh/ops/gist'
 require 'gh/ops/status'
@@ -15,8 +15,8 @@ module Gh
       desc 'permissions', 'Operate on repository permissions'
       subcommand 'permissions', Permissions
 
-      desc 'protect', 'Manage branch protection rules'
-      subcommand 'protect', Protect
+      desc 'protection', 'Manage branch protection rules'
+      subcommand 'protection', Protection
 
       desc 'comment', 'Create, update and delete issue comments'
       subcommand 'comment', Comment
