@@ -114,7 +114,7 @@ APPROVALS
               if options[:remove]
                 $gh.unprotect_branch(orgrepo[:full_name].to_s, branch, :accept => 'application/vnd.github.luke-cage-preview+json')
               else
-                $gh.protect_branch(orgrepo[:full_name].to_s, branch, protection_options)
+                $gh.protect_branch(orgrepo[:full_name].to_s, branch, protection_options.clone)
               end
             rescue Octokit::NotFound
             end
