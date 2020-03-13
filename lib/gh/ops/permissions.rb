@@ -15,7 +15,7 @@ module Gh
 
       desc 'get', 'get permissions on a repo'
       def get
-        say "Getting permissions for: #{options[:user].color(:yellow)} on repos matching: #{options[:repo].color(:cyan)}"
+        say "Getting permissions for: #{options[:team] ? options[:team].color(:yellow) : options[:user].color(:yellow)} on repos matching: #{options[:repo].color(:cyan)}"
         say 'Depending on the number of repos this may take a while...'
         say ''
         orgrepos = Gh::Ops.get_matching_repos(options[:org], options[:repo])
