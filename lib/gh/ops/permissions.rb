@@ -34,7 +34,7 @@ module Gh
         :desc => 'Permission to set on repositories [none, read or write]',
         :default => 'read'
       def set
-        say "Setting permissions for: #{options[:user].color(:yellow)} on repos matching: #{options[:repo].color(:cyan)} to #{options[:permission].color(:red)}"
+        say "Setting permissions for: #{options[:team] ? options[:team].color(:yellow) : options[:user].color(:yellow)} on repos matching: #{options[:repo].color(:cyan)} to #{options[:permission].color(:red)}"
         say 'Depending on the number of repos this may take a while...'
         say ''
         orgrepos = Gh::Ops.get_matching_repos(options[:org], options[:repo])
